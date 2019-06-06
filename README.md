@@ -60,10 +60,25 @@ pip install -r requirements-esp32.txt
 cd esp32
 ./write_fash.sh esp32-20190604-v1.11-25-gce8262a16.bin
 ```
+
 ### get python usb repl.
  - you require picocom for this, `sudo apt install picocom`
  ```bash
  picocom -b 115200 /dev/ttyUSB0
+ ```
+
+ ### deploy rfid reader code 
+ ```bash
+ ampy --port /dev/ttyUSB0 put reader/lock.py
+ ampy --port /dev/ttyUSB0 put reader/mfrc522.py
+ ampy --port /dev/ttyUSB0 put reader/main.py
+ ```
+
+  ### deploy rfid writers code 
+ ```bash
+ ampy --port /dev/ttyUSB0 put reader/_server.py
+ ampy --port /dev/ttyUSB0 put reader/mfrc522.py
+ ampy --port /dev/ttyUSB0 put reader/main.py
  ```
 
 ## Technology used
@@ -71,7 +86,7 @@ cd esp32
 * [Python3.6](https://www.python.org/)
 
 ## References
-- @todo document
+- [https://docs.micropython.org/en/latest/esp32/tutorial/intro.html](https://docs.micropython.org/en/latest/esp32/tutorial/intro.html)
 
 ## Known Bugs 
 
