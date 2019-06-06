@@ -6,12 +6,12 @@ from flask_login import login_required
 from.forms import CreateUserForm
 
 
-user={"id":1234,"pin":1234}
+user={"uid":'8660b2cc2c039ac11c17857641e509dd'}
 @main.route("/validate-pin",methods=["POST"])
 def validate_pin():
     data=json.loads(request.data)
     print(data)
-    if data["id"]==user["id"] and data["pin"]==user["pin"]:
+    if bytearray(data["uid"]).hex()==user["uid"]:
         return jsonify({"response":True})
     # counter bruteforce @todo use validation token for every device
     time.sleep(1)

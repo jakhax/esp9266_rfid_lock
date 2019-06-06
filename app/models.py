@@ -71,7 +71,7 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
-class AccessLogs(db.Model):
-    user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
-    created_at = db.Column(db.DateTime, index=True, default=func.now())
-    updated_at = db.Column(db.DateTime, default=func.now())
+# class AccessLogs(db.Model):
+#     user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
+#     created_at = db.Column(db.DateTime, index=True, default=func.now())
+#     updated_at = db.Column(db.DateTime, default=func.now())

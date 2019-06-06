@@ -47,7 +47,20 @@ Open the app on your browser, by default on `127.0.0.1:5000`.
 - @todo document
 
 ## Esp32
-- @todo document
+- I have written some shell scripts to enable you to easily write flash, upload and remove files from the board.
+
+### write flash
+
+```bash
+cd esp32
+./write_fash.sh esp32-20190604-v1.11-25-gce8262a16.bin
+```
+### get python usb repl.
+ - you require picocom for this, `sudo apt install picocom`
+ ```bash
+ picocom -b 115200 /dev/ttyUSB0
+ ```
+ 
 ## Technology used
 
 * [Python3.6](https://www.python.org/)
