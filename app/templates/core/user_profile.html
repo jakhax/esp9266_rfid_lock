@@ -49,8 +49,8 @@
                         {% if access_logs %}
                         {% for log in access_logs %}
                         <tr>
-                            <td>{{log.create_at.date}}</td>
-                            <td>{{log.create_at.date}}</td>
+                            <td>{{log.created_at.date()}}</td>
+                            <td>{{(log.created_at | localTime)}}</td>
                             <td><a href="{{ url_for('main.user_profile',id=user.id) }}" class="btn btn-primary btn-sm">Profile</a></td>
                         </tr>
                         {% endfor %}

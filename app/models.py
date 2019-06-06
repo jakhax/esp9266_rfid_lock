@@ -1,5 +1,7 @@
 import os,uuid
 from . import db
+from datetime import datetime
+import pytz
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -77,6 +79,7 @@ class AccessLogs(db.Model):
     updated_at = db.Column(db.DateTime, default=func.now())
 
     def save(self):
+       
         db.session.add(self)
         db.session.commit()
 

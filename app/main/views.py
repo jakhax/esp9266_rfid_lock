@@ -9,8 +9,10 @@ from app.models import User,AccessLogs,FailedAccessLogs
 user={"uid":'8660b2cc2c039ac11c17857641e509dd'}
 @main.route("/validate-pin",methods=["POST"])
 def validate_pin():
-    data=json.loads(request.data)
-    if data and "uid" in data.keys():
+    if request.is_json:data=json.loads(request.json)
+    else: data=json.loads(request.data)
+    print("uid" in list(data.keys()))
+    if data and "uid" in list(data.keys()):
         if type(data["uid"])==list:
             print(data)
             user=User.query.filter_by(uid=bytearray(data["uid"]).hex()).first()
@@ -23,7 +25,7 @@ def validate_pin():
             # counter bruteforce @todo use validation token for every device
             time.sleep(1)
             return jsonify({"response":True})
-    return jsonif({"error":"bad request"},status=400)
+    return abort(400)
 
 
 @main.route("/create-user",methods=["GET","POST"])
@@ -60,7 +62,8 @@ def edit_user(id):
 def user_profile(id):
     user=User.query.filter_by(id=id).first()
     if not user:abort(404)
-    return render_template("./core/user_profile.html",user=user)
+    access_logs=user.access.all()
+    return render_template("./core/user_profile.html",user=user,access_logs=access_logs)
 
 @main.route('/',methods=["GET"])
 @login_required
