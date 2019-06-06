@@ -1,0 +1,43 @@
+
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title> {% if title %} {{title}} {% else %} Lock {% endif %} </title>
+    {% endblock %}
+
+    {% block styles %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href='{{ url_for("static", filename="mdb/css/bootstrap.min.css") }}' rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href='{{ url_for("static", filename="mdb/css/mdb.min.css") }}' rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href='{{ url_for("static", filename="mdb/css/style.css") }}' rel="stylesheet">
+    {% endblock %}
+</head>
+
+<body>
+    {% block navbar %}
+    {% include "./includes/navbar.html" %}
+    {% endblock %}
+
+    {% block content %}
+    
+    {% endblock %}
+
+    {% block footer %}
+    {% include "./includes/footer.html" %}
+    {% endblock %}
+
+
+    {% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb/js/jquery-3.4.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb/js/mdb.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb/js/script.js')}}"></script>
+    {% endblock %}
+</body>
