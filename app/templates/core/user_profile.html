@@ -7,6 +7,26 @@
 {% block content %}
     {{super()}}
     <div class="container">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Error!</h4>
+                <p>{{error}}</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <hr>
+            </div>
+            {% endif %}
+            {% if success %}
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Success!</h4>
+                <p>{{success}}</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <hr>
+            </div>
+            {% endif %}
         <div class="row">
             <div class="col-md-4">
                 <!-- Card -->
@@ -24,7 +44,7 @@
                     <!-- Text -->
                     <p class="card-text">Uid: {{user.uid}}</p>
                     <!-- Button -->
-                    <a href="#" class="btn btn-primary">write new uid to rfid</a>
+                    <a href="{{ url_for('main.user_profile',id=user.id) }}?create_uid=true" class="btn btn-primary">write new uid to rfid</a>
                     <a href="{{ url_for('main.edit_user',id=user.id) }}" class="btn btn-primary">Edit profile</a>
                 
                     </div>
@@ -51,7 +71,7 @@
                         <tr>
                             <td>{{log.created_at.date()}}</td>
                             <td>{{(log.created_at | localTime)}}</td>
-                            <td><a href="{{ url_for('main.user_profile',id=user.id) }}" class="btn btn-primary btn-sm">Profile</a></td>
+                
                         </tr>
                         {% endfor %}
                         {% else %}

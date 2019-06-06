@@ -5,6 +5,7 @@ from flask import jsonify,request,render_template,redirect,url_for,abort
 from flask_login import login_required
 from.forms import CreateUserForm, EditUserForm
 from app.models import User,AccessLogs,FailedAccessLogs
+from app.rfid_writer_handler import RfidWriterTcpClient
 
 user={"uid":'8660b2cc2c039ac11c17857641e509dd'}
 @main.route("/validate-pin",methods=["POST"])
@@ -29,6 +30,7 @@ def validate_pin():
 
 
 @main.route("/create-user",methods=["GET","POST"])
+@login_required
 def create_user():
     form=CreateUserForm()
     error=False
@@ -43,6 +45,7 @@ def create_user():
 
 
 @main.route("/edit-user/<int:id>",methods=["GET","POST"])
+@login_required
 def edit_user(id):
     user=User.query.filter_by(id=id).first()
     if not user:abort(404)
@@ -57,13 +60,45 @@ def edit_user(id):
     form.email.data=user.email
     return render_template("./core/edit_user.html",form=form,error=error)
 
+def write_uid(id):
+    user=User.query.filter_by(id=id).first()
+    if not user:abort(404)
+    rfid_writer_client=RfidWriterTcpClient()
+    uid=user.create_uid()
+    d=rfid_writer_client.send_uid(uid)
+    if d=="success":
+        user.save()
+        return True
+    else:
+        return False
 
 @main.route("/user-profile/<int:id>",methods=["GET"])
+@login_required
 def user_profile(id):
+    success,error=None,None
+    if request.args.get("create_uid",default=False):
+        if write_uid(id):
+            success="Successfully wrote uid to RFID tag"
+        else:
+            error="Error while writing uid to RFID tag"
     user=User.query.filter_by(id=id).first()
     if not user:abort(404)
     access_logs=user.access.all()
-    return render_template("./core/user_profile.html",user=user,access_logs=access_logs)
+    return render_template("./core/user_profile.html",user=user,access_logs=access_logs,success=success,error=error)
+
+
+@main.route("/access-logs",methods=["GET"])
+@login_required
+def access_logs():
+    access_logs=AccessLogs.query.all()
+    return render_template("./core/access_logs.html",access_logs=access_logs)
+
+@main.route("/invalid-access-logs",methods=["GET"])
+@login_required
+def invalid_access_logs():
+    Invalid_access_logs=FailedAccessLogs.query.all()
+    return render_template("./core/invalid_access_logs.html",Invalid_access_logs=Invalid_access_logs)
+
 
 @main.route('/',methods=["GET"])
 @login_required

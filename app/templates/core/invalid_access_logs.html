@@ -13,7 +13,7 @@
                 <table class="table">
                     <thead class="default-color white-text">
                         <tr>
-                            <th scope="col">Email</th>
+                            <th scope="col">Invalid uid</th>
                             <th scope="col">Date</th>
                             <th scope="col">Time</th>
     
@@ -24,13 +24,14 @@
                         {% if access_logs %}
                         {% for log in access_logs %}
                         <tr>
-                            <td>{{log.user.email}}</td>
+                            <td>{{log.attempted_uid}}</td>
                             <td>{{log.created_at.date()}}</td>
                             <td>{{(log.created_at | localTime)}}</td>
+                        
                         </tr>
                         {% endfor %}
                         {% else %}
-                        <tr><td>No access log exists</td></tr>
+                        <tr><td>No invalid access log exists</td></tr>
                         {% endif %}
                     </tbody>
                 </table>

@@ -92,6 +92,7 @@ class TcpServer:
                     try: 
                         print(data)
                         print("\nPlace rfid tag near the reader to write to it\n")
+                        check=False
                         while True:
                             (stat, tag_type) = self.rc522.request(self.rc522.REQIDL)
                             if stat == self.rc522.OK:
@@ -108,6 +109,7 @@ class TcpServer:
                                             self.rc522.stop_crypto1()
                                             if stat == self.rc522.OK:
                                                 print("Data written to card")
+                                                check=True
                                             else:
                                                 print("Failed to write data to card")
                                         else:
@@ -115,7 +117,7 @@ class TcpServer:
                                     else:
                                         print("Failed to select tag")
                                     break
-                        response="success"
+                        response="success" if check == True else "error"
                         conn.send(response.encode("utf-8"))
                         conn.close()
                     except Exception as err:
