@@ -42,18 +42,16 @@ class User(db.Model):
     __tablename__='users'
     id=db.Column(db.Integer,primary_key=True)
     uid=db.Column(db.String(255),unique=True)
-    pin=db.Column(db.String(255))
     email=db.Column(db.String(255),unique=True)
-
     created_at = db.Column(db.DateTime, index=True, default=func.now())
     updated_at = db.Column(db.DateTime, default=func.now())
     access=db.relationship('AccessLogs', backref='user', lazy='dynamic')
 
     def create_uid(self):
         # 2**16 - 1
-        uid=str(uuid.uuid4())
+        uid=bytearray(os.urandom(16)).hex()
         if User.query.filter_by(uid=uid).first():
-            self.generate_card_creds()
+            self.create_uid()
         self.uid=uid
         return uid
 
@@ -71,7 +69,30 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
-# class AccessLogs(db.Model):
-#     user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
-#     created_at = db.Column(db.DateTime, index=True, default=func.now())
-#     updated_at = db.Column(db.DateTime, default=func.now())
+class AccessLogs(db.Model):
+    __tablename__='access_logs'
+    id=db.Column(db.Integer,primary_key=True)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_at = db.Column(db.DateTime, index=True, default=func.now())
+    updated_at = db.Column(db.DateTime, default=func.now())
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<User %r>' % self.user_id
+
+class FailedAccessLogs(db.Model):
+    __tablename__='failed_access_logs'
+    id=db.Column(db.Integer,primary_key=True)
+    attempted_uid=db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, index=True, default=func.now())
+    updated_at = db.Column(db.DateTime, default=func.now())
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<id %r>' % self.id

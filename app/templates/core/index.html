@@ -6,6 +6,33 @@
 
 {% block content %}
     {{super()}}
+    <div class="container">
+        <a href="{{ url_for('main.create_user') }}" class="btn btn-primary btn-sm">Add Users</a>
+        <div class="row">            
+            <table class="table">
+                <thead class="default-color white-text">
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">User id</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if users %}
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.email}}</td>
+                        <td>{{user.uid}}</td>
+                        <td><a href="{{ url_for('main.user_profile',id=user.id) }}" class="btn btn-primary btn-sm">Profile</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr><td>No user exists</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}

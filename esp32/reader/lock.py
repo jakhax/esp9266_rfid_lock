@@ -92,7 +92,7 @@ class Lock:
                 time.sleep(self.sleep_time)
                 self.built_in_led_pin.value(0)
             else:
-                time.sleep(self.get_sleep_time)
+                time.sleep(self.get_sleep_time())
                 print("wrong pin or id")
         else:
             print("Error occured, try again")

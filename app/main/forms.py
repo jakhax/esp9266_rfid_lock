@@ -4,4 +4,8 @@ from wtforms.validators import Required,DataRequired,Length,Email
 
 class CreateUserForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
-    submit = SubmitField('Log in')
+    submit = SubmitField('submit')
+
+class EditUserForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
+    submit = SubmitField('submit')
