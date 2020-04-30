@@ -1,6 +1,9 @@
-Consecutive normal punches
+ESP8266 RFID Lock System
 ==========================
 
+An RFID Lock system with an esp8266 on micropython and a flask back end.
+
+**NOTE** This project is not production ready and secure, its meant to be a learning material.
 
 # Installation
 
