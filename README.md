@@ -23,9 +23,11 @@ pip install -r requirements-esp32.txt
 ## Install firmware on ESP866/ESP32 with Micropython
 
 
- See the following resources to get started and install micropython
-    - [https://docs.micropython.org/en/latest/esp8266/tutorial/](https://docs.micropython.org/en/latest/esp8266/tutorial/)
-    - [GETTING STARTED WITH MICROPYTHON ON ESP8266](https://medium.com/@jackogina60/getting-started-with-micropython-on-esp8266-32eba914fed2)
+ See the following resources to get started and install micropython.
+ 
+ 
+ - [https://docs.micropython.org/en/latest/esp8266/tutorial/](https://docs.micropython.org/en/latest/esp8266/tutorial/)
+ - [GETTING STARTED WITH MICROPYTHON ON ESP8266](https://medium.com/@jackogina60/getting-started-with-micropython-on-esp8266-32eba914fed2)
 
 
 ### get python usb repl.
